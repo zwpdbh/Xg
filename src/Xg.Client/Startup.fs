@@ -5,13 +5,13 @@ open Bolero.Remoting.Client
 
 module Program =
 
-    [<EntryPoint>]
-    let Main args =
-        let builder = WebAssemblyHostBuilder.CreateDefault(args)
-        builder.RootComponents.Add<Main.MyApp>("#main")
+  [<EntryPoint>]
+  let Main args =
+    let builder = WebAssemblyHostBuilder.CreateDefault(args)
+    builder.RootComponents.Add<Main.MyApp>("#main")
 
-        builder.Services.AddRemoting(builder.HostEnvironment)
-        |> ignore
+    builder.Services.AddRemoting(builder.HostEnvironment)
+    |> ignore
 
-        builder.Build().RunAsync() |> ignore
-        0
+    builder.Build().RunAsync() |> ignore
+    0

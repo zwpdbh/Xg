@@ -1,4 +1,4 @@
-# хТр╙ак╫Бсп╧ь .editorconfig ╣доЙо╦пео╒ё╛гК╡нтд https://aka.ms/editorconfigdocs
+# О©╫О©╫р╙О©╫к╫О©╫О©╫п╧О©╫ .editorconfig О©╫О©╫О©╫О©╫о╦О©╫О©╫о╒О©╫О©╫О©╫О©╫О©╫О©╫О©╫ https://aka.ms/editorconfigdocs
 ###############################
 # Core EditorConfig Options   #
 ###############################
@@ -20,7 +20,7 @@ indent_size = 2
 
 # FSharp files  
 [*.{fs,fsx}]
-indent_size = 4
+indent_size = 2
 
 # Code files
 [*.{cs,csx,vb,vbx}]
