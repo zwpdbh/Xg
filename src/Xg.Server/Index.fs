@@ -47,7 +47,7 @@ let page =
               attr.src "https://github.com/fsbolero/website/raw/master/src/Website/img/wasm-fsharp.png"
             }
 
-            "  Bolero"
+            "  Xg"
           }
         }
       }
