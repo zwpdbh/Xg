@@ -4,12 +4,12 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="OthersService.fs" />
     <None Include="paket.references" />
     <Compile Include="BookService.fs" />
     <Compile Include="Index.fs" />
     <Compile Include="Startup.fs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Xg.Client\Xg.Client.fsproj" />
   </ItemGroup>

@@ -9,6 +9,7 @@ module Program =
   let Main args =
     let builder = WebAssemblyHostBuilder.CreateDefault(args)
     builder.RootComponents.Add<Main.MyApp>("#main")
+    builder.RootComponents.Add<Others.MyApp>("#main")
 
     builder.Services.AddRemoting(builder.HostEnvironment)
     |> ignore

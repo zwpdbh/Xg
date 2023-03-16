@@ -53,9 +53,9 @@ let page =
       }
 
       div {
-        attr.id "main"
+        attr.id "main"     
         comp<Client.Main.MyApp>
-        comp<Client.Main.MyApp>
+        comp<Client.Others.MyApp>
       }
 
       boleroScript

@@ -19,6 +19,9 @@ type Startup() =
     services.AddMvc() |> ignore
     services.AddServerSideBlazor() |> ignore
 
+    services.AddRemoting<OthersService>()
+    |> ignore
+
     services
       .AddAuthorization()
       .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -31,6 +34,8 @@ type Startup() =
       )
 #endif
     |> ignore
+
+
 
   // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
   member this.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =

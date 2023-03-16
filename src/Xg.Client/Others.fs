@@ -11,9 +11,9 @@ open Bolero.Templating.Client
 
 /// Routing endpoints definition.
 type Page =
-  | [<EndPoint "/">] Home
-  | [<EndPoint "/counter">] Counter
-  | [<EndPoint "/data">] Data
+  | [<EndPoint "/others">] Home
+  | [<EndPoint "/others/counter">] Counter
+  | [<EndPoint "/others/data">] Data
 
 /// The Elmish application's model.
 type Model =
@@ -43,7 +43,7 @@ let initModel =
     signInFailed = false }
 
 /// Remote service definition.
-type BookService =
+type OthersService =
   { /// Get the list of all books in the collection.
     getBooks: unit -> Async<Book []>
 
@@ -63,7 +63,7 @@ type BookService =
     signOut: unit -> Async<unit> }
 
   interface IRemoteService with
-    member this.BasePath = "/books"
+    member this.BasePath = "/others/books"
 
 /// The Elmish application's update messages.
 type Message =
@@ -130,12 +130,12 @@ let update remote message model =
 /// Connects the routing system to the Elmish application.
 let router = Router.infer SetPage (fun model -> model.page)
 
-type Main = Template<"wwwroot/main.html">
+type Others = Template<"wwwroot/main.html">
 
-let homePage model dispatch = Main.Home().Elt()
+let homePage model dispatch = Others.Home().Elt()
 
 let counterPage model dispatch =
-  Main
+  Others
     .Counter()
     .Decrement(fun _ -> dispatch Decrement)
     .Increment(fun _ -> dispatch Increment)
@@ -143,7 +143,7 @@ let counterPage model dispatch =
     .Elt()
 
 let dataPage model (username: string) dispatch =
-  Main
+  Others
     .Data()
     .Reload(fun _ -> dispatch GetBooks)
     .Username(username)
@@ -151,7 +151,7 @@ let dataPage model (username: string) dispatch =
     .Rows(
       cond model.books
       <| function
-        | None -> Main.EmptyData().Elt()
+        | None -> Others.EmptyData().Elt()
         | Some books ->
           forEach books
           <| fun book ->
@@ -165,7 +165,7 @@ let dataPage model (username: string) dispatch =
     .Elt()
 
 let signInPage model dispatch =
-  Main
+  Others
     .SignIn()
     .Username(model.username, (fun s -> dispatch (SetUsername s)))
     .Password(model.password, (fun s -> dispatch (SetPassword s)))
@@ -175,7 +175,7 @@ let signInPage model dispatch =
       <| function
         | false -> empty ()
         | true ->
-          Main
+          Others
             .ErrorNotification()
             .HideClass("is-hidden")
             .Text("Sign in failed. Use any username and the password \"password\".")
@@ -184,7 +184,7 @@ let signInPage model dispatch =
     .Elt()
 
 let menuItem (model: Model) (page: Page) (text: string) =
-  Main
+  Others
     .MenuItem()
     .Active(
       if model.page = page then
@@ -197,7 +197,7 @@ let menuItem (model: Model) (page: Page) (text: string) =
     .Elt()
 
 let view model dispatch =
-  Main()
+  Others()
     .Menu(
       concat {
         menuItem model Home "Home"
@@ -221,7 +221,7 @@ let view model dispatch =
       <| function
         | None -> empty ()
         | Some err ->
-          Main
+          Others
             .ErrorNotification()
             .Text(err)
             .Hide(fun _ -> dispatch ClearError)
@@ -233,8 +233,8 @@ type MyApp() =
   inherit ProgramComponent<Model, Message>()
 
   override this.Program =
-    let bookService = this.Remote<BookService>()
-    let update = update bookService
+    let othersService = this.Remote<OthersService>()
+    let update = update othersService
 
     Program.mkProgram (fun _ -> initModel, Cmd.ofMsg GetSignedInAs) update view
     |> Program.withRouter router
